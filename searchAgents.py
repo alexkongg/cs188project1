@@ -286,15 +286,26 @@ class CornersProblem(search.SearchProblem):
         # in initializing the problem
         "*** YOUR CODE HERE ***"
 
+    def updateCornerState(self, state):
+        position, corners = state
+        corners = list(corners)
+        for i in range(4):
+            if position == self.corners[i]:
+                corners[i] = True
+        return tuple(corners)
+
     def getStartState(self):
         "Returns the start state (in your state space, not the full Pacman state space)"
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return self.updateCornerState((self.startingPosition, (False, False, False, False)))
 
     def isGoalState(self, state):
         "Returns whether this search state is a goal state of the problem"
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        for corner in state[1]:
+            if not corner:
+                return False
+        return True
 
     def getSuccessors(self, state):
         """
